@@ -7,6 +7,7 @@ import copy
 from genericpath import exists
 from logging import DEBUG, getLogger
 from os.path import join
+import os
 import sys
 from textwrap import dedent
 
@@ -75,7 +76,7 @@ class Solver(object):
                 The set of package specs to remove from the prefix.
 
         """
-        self.prefix = prefix
+        self.prefix = os.fspath(prefix)
         self.channels = IndexedSet(Channel(c) for c in channels or context.channels)
         self.subdirs = tuple(s for s in subdirs or context.subdirs)
         self.specs_to_add = frozenset(MatchSpec.merge(s for s in specs_to_add))
